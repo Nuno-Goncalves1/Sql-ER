@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0" version="26.2.14">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1501" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2336" math="0" shadow="0">
+    <mxGraphModel dx="1240" dy="707" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2336" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -202,20 +202,17 @@
         <mxCell id="oKJcFKSZTmgvzOlzi9U6-25" value="&lt;div&gt;N&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="300" y="600" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-26" value="Proposta (idProp,idMun, Titulo, Descrição, DataCriação,idEstudoViabilidade, idAnaliseMunicipes,id .....)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1080" width="560" height="40" as="geometry" />
+        <mxCell id="oKJcFKSZTmgvzOlzi9U6-26" value="Proposta (idProp,idMun, Titulo, Descrição, DataCriação,idEstudoViabilidade, idAnaliseMunicipe,idFaseExecucao, idEmOrcamento, idAnaliseExecucao" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="80" y="1080" width="810" height="40" as="geometry" />
         </mxCell>
         <mxCell id="oKJcFKSZTmgvzOlzi9U6-27" value="Municipe (idMun, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="80" y="1040" width="140" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-30" value="Entidade(idEnt, nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="oKJcFKSZTmgvzOlzi9U6-30" value="Entidade(idEnt, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="80" y="1120" width="130" height="40" as="geometry" />
         </mxCell>
         <mxCell id="oKJcFKSZTmgvzOlzi9U6-33" value="Parece(idEnt, idProp)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="80" y="1160" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="oKJcFKSZTmgvzOlzi9U6-27" target="oKJcFKSZTmgvzOlzi9U6-27" edge="1">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="oKJcFKSZTmgvzOlzi9U6-35" value="ConsFazOrçam(idCons, idOrcam, NomeConsorio)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="80" y="1240" width="270" height="40" as="geometry" />
@@ -251,7 +248,7 @@
           <mxGeometry x="80" y="1600" width="140" height="40" as="geometry" />
         </mxCell>
         <mxCell id="oKJcFKSZTmgvzOlzi9U6-49" value="Estudos/Analises podem ser null" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="680" y="1085" width="200" height="30" as="geometry" />
+          <mxGeometry x="950" y="1085" width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="x0ewcK_yAptQBKAOsCnC-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;shape=link;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="x0ewcK_yAptQBKAOsCnC-4" target="x0ewcK_yAptQBKAOsCnC-5">
           <mxGeometry relative="1" as="geometry" />
