@@ -1,5 +1,5 @@
 CREATE TABLE Proposta (
-    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_Proposta INT IDENTITY(1,1) PRIMARY KEY,
     descricao TEXT,
     id_Municipe INT,
     FOREIGN KEY (id_Municipe) REFERENCES(id)
