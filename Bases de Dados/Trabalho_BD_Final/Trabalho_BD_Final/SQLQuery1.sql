@@ -124,7 +124,7 @@ FROM Maquinas;
 SELECT *
 FROM OrcamentoMateriais;
 SELECT *
-FROM OrcamentoMaquinas
+FROM OrcamentoMaquinas;
 
 
 SELECT TABLE_SCHEMA, TABLE_NAME
@@ -171,4 +171,5 @@ DROP TABLE  EstudoViabilidade;
 DROP TABLE  Parecer;
 DROP TABLE  Proposta;
 DROP TABLE  Entidade;
+DROP TABLE  Municipe;
 
