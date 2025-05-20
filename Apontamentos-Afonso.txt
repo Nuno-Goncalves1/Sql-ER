@@ -1,0 +1,60 @@
+CREATE TABLE Proposta (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    descricao TEXT,
+    id_Municipe INT,
+    FOREIGN KEY (id_Municipe) REFERENCES(id)
+);
+
+CREATE TABLE EstudoViabilidade (
+    id INT PRIMARY KEY,
+    detalhes TEXT,
+    FOREIGN KEY (id_Proposta) REFERENCES Proposta(id)
+);
+
+CREATE TABLE Analise (
+    id INT PRIMARY KEY,
+    detalhes TEXT,
+    FOREIGN KEY (id_Proposta) REFERENCES Proposta(id)
+);
+
+CREATE TABLE FaseExecucao (
+    id INT PRIMARY KEY,
+    detalhes TEXT,
+    FOREIGN KEY (id_Proposta) REFERENCES Proposta(id)
+);
+
+CREATE TABLE EmOrcamento (
+    id INT PRIMARY KEY,
+    detalhes TEXT,
+    FOREIGN KEY (id_Proposta) REFERENCES Proposta(id)
+);
+
+CREATE TABLE AnaliseExecucao (
+    id INT PRIMARY KEY,
+    detalhes TEXT,
+    FOREIGN KEY (id_Proposta) REFERENCES Proposta(id)
+);
+
+CREATE TABLE Orcamento (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_proposta INT,
+    id_construtora INT,
+    id_consorcio INT,
+    FOREIGN KEY (id_proposta) REFERENCES Proposta(id),
+    FOREIGN KEY (id_construtora) REFERENCES Construtora(id)
+    FOREIGN KEY (id_consorcio) REFERENCES Consorcio(id)
+);
+
+CREATE TABLE Materiais (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nome VARCHAR(100),
+    id_orcamento INT,
+    FOREIGN KEY (id_orcamento) REFERENCES Orcamento(id),
+);
+
+CREATE TABLE Equipamentos (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nome VARCHAR(100),
+    id_orcamento INT,
+    FOREIGN KEY (id_orcamento) REFERENCES Orcamento(id),
+);
