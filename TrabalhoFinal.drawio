@@ -201,51 +201,6 @@
         <mxCell id="oKJcFKSZTmgvzOlzi9U6-25" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="300" y="600" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-26" value="Proposta (idProp,idMun, Titulo, Descrição, DataCriação)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1080" width="310" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-27" value="Municipe (idMun, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1040" width="140" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-30" value="Entidade(idEnt, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1120" width="130" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-33" value="Parece(idEnt, idProp)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1160" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-35" value="ConsFazOrçam(idCons, idOrcam, NomeConsorio)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1240" width="270" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-36" value="Construtora(idCons, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1280" width="150" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-38" value="Orçamento(intOrcam, idProp, Montante)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1200" width="220" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-41" value="NomeConsorio pode ser null&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;como assim o nome do consórcio pode ser null&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="355" y="1230" width="270" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-42" value="Material(idMat, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1360" width="130" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-43" value="OrçamPrecisaMat(idOrcam, idMaterial, Quant)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1320" width="250" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-44" value="Maquina(idMaq, Nome)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1440" width="130" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-45" value="OrçamPrecisaMaq(idOrcam, idMaq, Quant, Data)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1400" width="270" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-46" value="EstudoViabilidade(id, idProp ....)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1520" width="180" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-47" value="AnaliseMunicipes(id, idProp ....)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1560" width="180" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="oKJcFKSZTmgvzOlzi9U6-48" value="..." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="1600" width="140" height="40" as="geometry" />
-        </mxCell>
         <mxCell id="x0ewcK_yAptQBKAOsCnC-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;shape=link;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="x0ewcK_yAptQBKAOsCnC-4" target="x0ewcK_yAptQBKAOsCnC-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
