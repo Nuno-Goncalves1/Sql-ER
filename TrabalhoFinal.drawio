@@ -222,9 +222,6 @@
         <mxCell id="x0ewcK_yAptQBKAOsCnC-11" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1280" y="320" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7rlPPhbUrD_SYSvHT2sh-0" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Consultas&amp;nbsp;&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="40" y="1700" width="1520" height="560" as="geometry" />
-        </mxCell>
         <mxCell id="1TOI9RqUdgh465J-jzmI-3" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="980" y="320" width="60" height="30" as="geometry" />
         </mxCell>
