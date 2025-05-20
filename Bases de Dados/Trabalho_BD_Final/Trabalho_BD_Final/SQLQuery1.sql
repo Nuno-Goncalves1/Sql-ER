@@ -18,7 +18,7 @@ CREATE TABLE Proposta (
 CREATE TABLE Parecer (
     id_entidade INT,
     id_proposta INT,
-    PRIMARY KEY (id_entidade, id_proposta),
+    CONSTRAINT PK_Parecer PRIMARY KEY (id_entidade, id_proposta),
     FOREIGN KEY (id_entidade) REFERENCES Entidade(id),
     FOREIGN KEY (id_proposta) REFERENCES Proposta(id)
 );
@@ -91,6 +91,7 @@ CREATE TABLE OrcamentoMaquinas (
     FOREIGN KEY (id_orcamento) REFERENCES Orcamento(id),
     FOREIGN KEY (id_maquina) REFERENCES Maquinas(id)
 );
+-- Key's
 
 -- Consultas para verificar a estrutura das tabelas criadas
 -- Verifica as tabelas criadas
@@ -170,4 +171,4 @@ DROP TABLE  EstudoViabilidade;
 DROP TABLE  Parecer;
 DROP TABLE  Proposta;
 DROP TABLE  Entidade;
-DROP TABLE  ;
+
