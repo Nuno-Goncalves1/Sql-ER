@@ -1,0 +1,27 @@
+Municipe(idMunicipe(PK), ...)
+Proposta(idProposta(PK), idMunicipe(FK), ...)
+Classifica(idMunicipe (PK,FK), idProposta (PK,FK))
+
+Entidade(idEntidade(PK), ...)
+Parece (idEntidade(PK,FK), idProposta(PK,FK))
+
+Construtora(idConstrutora(PK), ...)
+Consorcio(idConsorcio(PK), ...)
+Participa(idConstrutora (PK,FK), idConsorcio (PK,FK))
+
+OrcamentoConstrutora(idOrcamento(PK,FK), idConstrutora(FK))
+OrcamentoConsorcio(idOrcamento(PK,FK), idConsorcio(FK))
+
+Orcamento(idOrcamento(PK), idProposta(FK), ...)
+
+Materiais(idMaterial(PK), ...)
+PrecisaMaterial(idOrçamento(PK,FK), idMaterial(PK,FK), ...)
+
+Equipamentos(idEquipamento(PK), ...)
+PrecisaEquipamento(idOrçamento(PK,FK), idEquipamento(PK,FK), ...)
+
+EstudoViabilidade(idEstudo(PK), idProposta(FK), ...)
+AnaliseMunicipes(idAnaliseM(PK), idProposta(FK), ...)
+FaseExecucao(idFase(PK), idProposta(FK), ...)
+EmOrcamento(idEmOrcamento(PK), idProposta(FK), ...)
+AnaliseExecucao(idAnaliseE(PK), idProposta(FK), ...)
