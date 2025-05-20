@@ -2,109 +2,113 @@
 CREATE TABLE Municipe (
     idMunicipe INT
     CONSTRAINT PK_Minicepe PRIMARY KEY (idMunicipe) 
-)
+);
 CREATE TABLE Proposta (
     idProposta INT 
     CONSTRAINT PK_Proposta PRIMARY KEY (idProposta)
-)
+);
 CREATE TABLE Classifica(
     CONSTRAINT PK_Classifica PRIMARY KEY (idMunicipe,idProposta)
-)
+);
 CREATE TABLE Entidade (
     idEntidade INT 
     CONSTRAINT PK_Entidade PRIMARY KEY (idEntidade)
-)
+);
 CREATE TABLE Parecer(
     idParecer INT 
     CONSTRAINT PK_Parecer PRIMARY KEY
-)
+);
 CREATE TABLE Construtora(
     idConstrutora INT
     CONSTRAINT PK_Construtora PRIMARY KEY (idConstrutora)
-)
+);
 CREATE TABLE Consorcio(
     idConsorcio INT
     CONSTRAINT PK_Consorcio PRIMARY KEY (idConsorcio)
-)
+);
 CREATE TABLE Participa(
     CONSTRAINT PK_Participa PRIMARY KEY (idConstrutora,idConsorcio)
-)
+);
 CREATE TABLE Orcamento(
     idOrcamento INT
     CONSTRAINT PK_Orcamento PRIMARY KEY (idOrcamento)
-)
+);
 CREATE TABLE Materiais(
     idMateriais INT
     CONSTRAINT PK_Materiais PRIMARY KEY (idMateriais)
-)
+);
 CREATE TABLE Equipamentos(
     idEquipamentos INT
     CONSTRAINT PK_Equipamentos PRIMARY KEY (idEquipamentos)
-)
+);
 CREATE TABLE PrecisaMaterial(
     CONSTRAINT PK_Precisa PRIMARY KEY (idOrcamento,idMateriais)
-)
+);
 CREATE TABLE PrecisaEquipamento(
     CONSTRAINT PK_Precisa PRIMARY KEY (idOrcamento,idEquipamentos)
-)
+);
 CREATE TABLE EstudoViabilidade(
     idEstudo INT
     CONSTRAINT PK_EstudoViabilidade PRIMARY KEY (idEstudo)0
-)
+);
 CREATE TABLE AnaliseMunipes(
     idAnalise INT
     CONSTRAINT PK_AnaliseMunipes PRIMARY KEY (idAnalise)
-)
+);
 CREATE TABLE FaseExecucao(
     idFase INT
     CONSTRAINT PK_FaseExecucao PRIMARY KEY (idFase)
-)
+);
 CREATE TABLE EmOrcamento(
     idEmOrcamento INT
     CONSTRAINT PK_Orcamento PRIMARY KEY (idEmOrcamento)
-)
+);
 CREATE TABLE AnaliseExecucao(
     idAnaliseExecucao INT
     CONSTRAINT PK_AnaliseExecucao PRIMARY KEY (idAnaliseExecucao)
-)
+);
 
 -- Key's
 ALTER TABLE Proposta
-ADD CONSTRAINT FK_Proposta_Municipe FOREIGN KEY (idMunicipe) REFERENCES Municipe (idMunicipe)
+ADD CONSTRAINT FK_Proposta_Municipe FOREIGN KEY (idMunicipe) REFERENCES Municipe (idMunicipe);
 
-ALTER TABLE 
+ALTER TABLE Clasifica
+ADD CONSTRAINT FK_Clasifica_Municipe FOREIGN KEY (idMunicipe) REFERENCES Municipe (idMunicipe),
+CONSTRAINT FK_Clasifica_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
+
+
 -- Consultas para verificar a estrutura das tabelas criadas.
 -- Verifica as tabelas criadas
 SELECT *
-FROM Municipe
+FROM Municipe;
 SELECT *
-FROM Entidade
+FROM Entidade;
 SELECT *
-FROM Proposta
+FROM Proposta;
 SELECT *
-FROM  Parecer
+FROM  Parecer;
 SELECT *
-FROM EstudoViabilidade
+FROM EstudoViabilidade;
 SELECT *
-FROM Analise
+FROM Analise;
 SELECT *
-FROM FaseExecucao
+FROM FaseExecucao;
 SELECT *
-FROM EmOrcamento
+FROM EmOrcamento;
 SELECT *
-FROM AnaliseExecucao
+FROM AnaliseExecucao;
 SELECT *
-FROM Construtora
+FROM Construtora;
 SELECT *
-FROM Orcamento
+FROM Orcamento;
 SELECT *
-FROM Materiais
+FROM Materiais;
 SELECT *
-FROM Maquinas
+FROM Maquinas;
 SELECT *
-FROM OrcamentoMateriais
+FROM OrcamentoMateriais;
 SELECT *
-FROM OrcamentoMaquinas
+FROM OrcamentoMaquinas;
 
 
 /* 1.1 B) */
@@ -165,19 +169,19 @@ EXEC sp_executesql @sql
 -- Exclui as chaves estrangeiras
 
 --Exclusao de tabelas
-DROP TABLE  OrcamentoMaquinas
-DROP TABLE  OrcamentoMateriais
-DROP TABLE  Orcamento
-DROP TABLE  Construtora
-DROP TABLE  Materiais
-DROP TABLE  Maquinas
-DROP TABLE  AnaliseExecucao
-DROP TABLE  EmOrcamento
-DROP TABLE  FaseExecucao
-DROP TABLE  Analise
-DROP TABLE  EstudoViabilidade
-DROP TABLE  Parecer
-DROP TABLE  Proposta
-DROP TABLE  Entidade
-DROP TABLE  Municipe
+DROP TABLE  OrcamentoMaquinas;
+DROP TABLE  OrcamentoMateriais;
+DROP TABLE  Orcamento;
+DROP TABLE  Construtora;
+DROP TABLE  Materiais;
+DROP TABLE  Maquinas;
+DROP TABLE  AnaliseExecucao;
+DROP TABLE  EmOrcamento;
+DROP TABLE  FaseExecucao;
+DROP TABLE  Analise;
+DROP TABLE  EstudoViabilidade;
+DROP TABLE  Parecer;
+DROP TABLE  Proposta;
+DROP TABLE  Entidade;
+DROP TABLE  Municipe;
 
