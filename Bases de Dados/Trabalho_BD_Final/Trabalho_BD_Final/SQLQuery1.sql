@@ -207,10 +207,14 @@ ADD CONSTRAINT FK_OrcamentoConsorcio_Orcamento FOREIGN KEY (idOrcamento) REFEREN
 CONSTRAINT FK_OrcamentoConsorcio_Consorcio FOREIGN KEY (idConsorcio) REFERENCES Consorcio (idConsorcio);
 
 
+
+
+
+
 INSERT INTO FaseExecucao(idProposta)
     SELECT prop.idProposta
-	FROM Propostas AS prop
-		INNER JOIN Pareceres AS parc ON prop.idProposta = parc.idProposta
+	FROM Proposta AS prop
+		INNER JOIN Parecer AS parc ON prop.idProposta = parc.idProposta
 		INNER JOIN Classifica AS c ON prop.idProposta = c.idProposta
 	GROUP BY prop.idProposta
 	HAVING COUNT(DISTINCT parc.idEntidade) >= 3
@@ -251,9 +255,9 @@ Where m.nome Like '%Rita%' And p.data Between '2024-04-01' And '2024-06-30' Orde
 
 /* 1.1 C)*/
 
-Select m.nome, Count(p.idProp) As 'Quantidade de Propostas' 
+Select m.nome, Count(p.idProposta) As 'Quantidade de Propostas' 
 From Municipe as m Left Join Proposta as p On m.idMunicipe = p.idMunicipe 
-Group By m.nome Order By Count(p.idProp) Desc;
+Group By m.nome Order By Count(p.idProposta) Desc;
 
 /* 1.1 D)*/
 
