@@ -275,6 +275,7 @@ Group By p.nome
 Having Count(p.avaliacao) > 10 And Avg(p.avaliacao) >= 8 
 Order By Avg(p.avaliacao) Desc;
 
+
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE'
