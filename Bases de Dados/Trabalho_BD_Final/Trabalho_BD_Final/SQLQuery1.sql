@@ -5,7 +5,7 @@ USE BD_20240620_2425_INF;
 CREATE TABLE Municipe (
     idMunicipe INT,
 	nome VARCHAR(MAX),
-	nif INT UNIQUE CHECK (nif BETWEEN 100000000 AND 299999999),
+	nif INT UNIQUE CHECK (nif BETWEEN 100000000 AND 399999999),
 	cc VARCHAR(12) UNIQUE,
 	dataNascimento DATE,
 	genero Char(1) CHECK (genero IN ('M', 'F', 'O')),
@@ -37,7 +37,7 @@ CREATE TABLE Classifica(
 CREATE TABLE Entidade (
     idEntidade INT,
 	nome VARCHAR(MAX),
-	nif INT UNIQUE CHECK (nif BETWEEN 500000000 AND 599999999),
+	nipc INT UNIQUE CHECK (nipc BETWEEN 500000000 AND 999999999),
 	morada VARCHAR(MAX),
 	email VARCHAR(MAX),
 	telefone VARCHAR(MAX),
@@ -107,7 +107,7 @@ CREATE TABLE PrecisaMaterial(
 CREATE TABLE Equipamentos(
     idEquipamentos INT,
 	designacao VARCHAR(MAX),
-	horasUtilizacao INT CHECK( horasUtilizacao > 0 AND horasUtilizacao < 25),
+	horasUtilizacao INT CHECK( horasUtilizacao > 0 AND horasUtilizacao <= 24),
 	dataAquisicao DATE,
     CONSTRAINT PK_Equipamentos PRIMARY KEY (idEquipamentos)
 );
@@ -220,6 +220,15 @@ ADD CONSTRAINT FK_EmOrcamento_Proposta FOREIGN KEY (idProposta) REFERENCES Propo
 ALTER TABLE AnaliseExecucao
 ADD CONSTRAINT FK_AnaliseExecucao_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
+-- Inserir os dados do texto
+
+INSERT INTO Entidade VALUES (1, 'Água', 507123456, 'Rua do Oceano', 'geral@aguas.pt', 913456789);
+INSERT INTO Entidade VALUES (2, 'Animais', 509274631, 'Rua do Leão', 'animais@natureza.pt', 938724560);
+INSERT INTO Entidade VALUES (3, 'Natureza', 508392714, 'Rua da Natureza', 'geral@natureza.pt', 961234567);
+INSERT INTO Entidade VALUES (4, 'Tráfego', 509482376, 'Avenida dos Transportes', 'geral@transportes.pt', 939876543);
+
+
+-- Passa para Fase de Execucao
 
 INSERT INTO FaseExecucao(idProposta)
     SELECT prop.idProposta
@@ -231,10 +240,63 @@ INSERT INTO FaseExecucao(idProposta)
 	AND COUNT(c.idProposta) >= 1000
 	AND AVG(c.classificacao) >= 8
 
+-- Acréscimos tendo em conta a ‘Proporcionalidade de Grupo
+-- a.
+INSERT INTO Entidade VALUES (5, 'Ordenamento Territorial', 501234567, 'Rua de Santo André', 'ordenamento@territorial.pt', 965645231);
+INSERT INTO Entidade VALUES (6, 'Logística', 507836129, 'Rua do Comércio', 'contacto@logistica.pt', 961584567);
+ALTER TABLE Entidade ADD website VARCHAR(100) NULL;
+
+-- b.
+GO
+CREATE VIEW PropostasMunicipes AS
+SELECT 
+    p.titulo,
+    m.nome AS nomeMunicipe,
+    m.nif AS nifMunicipe,
+    p.data AS dataSubmissao
+FROM Proposta AS p INNER JOIN Municipe AS m ON p.idMunicipe = m.idMunicipe;
+GO
+SELECT * FROM PropostasMunicipes;
+
+GO
+	CREATE VIEW OrcamentosDetalhados AS
+	SELECT 
+		o.designacao,
+		o.valor,
+		o.dataInicioExecucao,
+		o.dataFimExecucao,
+		ct.nome AS nomeConstrutora,
+		cs.nome AS nomeConsorcio
+	FROM Orcamento AS o
+	LEFT JOIN OrcamentoConstrutora AS oct ON o.idOrcamento = oct.idOrcamento
+	LEFT JOIN Construtora AS ct ON oct.idConstrutora = ct.idConstrutora
+	LEFT JOIN OrcamentoConsorcio AS ocs ON o.idOrcamento = ocs.idOrcamento
+	LEFT JOIN Consorcio AS cs ON ocs.idConsorcio = cs.idConsorcio
+	WHERE ct.nome IS NOT NULL OR cs.nome IS NOT NULL;
+GO
+SELECT * FROM OrcamentosDetalhados;
+
+GO
+	CREATE VIEW EstadoExecucaoPropostas AS
+	SELECT 
+		p.titulo,
+		f.nomeFase,
+		f.dataInicio,
+		f.dataFim,
+		f.concluida,
+		f.percentagemCoimaFinal,
+		f.montanteEnvolvidoFinal
+	FROM Proposta AS p
+	INNER JOIN FaseExecucao AS f ON p.idProposta = f.idProposta;
+GO
+SELECT * FROM EstadoExecucaoPropostas;
+
 
 
 -- Consultas para verificar a estrutura das tabelas criadas.
--- Verifica as tabelas criadas
+-- Verifica as tabelas criadas 
+
+/* 1.1 A) */
 
 SELECT * FROM Entidade;
 SELECT * FROM Parecer;
@@ -286,6 +348,27 @@ WHERE p.data BETWEEN '2024-01-01' AND '2024-06-30'
 AND c.classificacao >= 8
 AND (SELECT COUNT(*) FROM Classifica WHERE idProposta = p.idProposta) >= 10
 ORDER BY Media_Avaliacao DESC;  
+
+
+-- teste
+GO
+CREATE VIEW TotalPropostasMunicipe_PorSemestre AS
+SELECT 
+    p.id_municipio,
+    1 + (MONTH(p.data_proposta) > 6) AS semestre,
+    COUNT(*) AS total_propostas
+FROM Propostas p
+INNER JOIN (
+    SELECT id_municipio
+    FROM Propostas
+    GROUP BY id_municipio
+    HAVING COUNT(DISTINCT 1 + (MONTH(data_proposta) > 6)) = 2
+) AS m ON p.id_municipio = m.id_municipio
+GROUP BY p.id_municipio, 1 + (MONTH(p.data_proposta) > 6);
+GO
+
+
+
 
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES
@@ -356,3 +439,7 @@ DROP TABLE AnaliseExecucao;
 DROP TABLE Municipe;
 DROP TABLE Proposta;
 DROP TABLE Classifica;
+
+DROP VIEW EstadoExecucaoPropostas;
+DROP VIEW PropostasMunicipes;
+DROP VIEW OrcamentosDetalhados;
