@@ -279,9 +279,9 @@ ORDER BY m.nome;
 
 /* 1.1 E) */
 
-SELECT p.titutlo, AVG(c.classificacao) AS Media_Avaliacao
+SELECT p.titulo, AVG(c.classificacao) AS Media_Avaliacao
 FROM Proposta AS p
-INNER JOIN Classifica AS c ON p.Proposta = c.idProposta
+INNER JOIN Classifica AS c ON p.idProposta = c.idProposta
 WHERE p.data BETWEEN '2024-01-01' AND '2024-06-30'
 AND c.classificacao >= 8
 AND (SELECT COUNT(*) FROM Classifica WHERE idProposta = p.idProposta) >= 10
