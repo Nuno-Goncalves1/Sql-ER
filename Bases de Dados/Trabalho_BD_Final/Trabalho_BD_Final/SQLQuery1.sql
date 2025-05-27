@@ -220,12 +220,27 @@ ADD CONSTRAINT FK_EmOrcamento_Proposta FOREIGN KEY (idProposta) REFERENCES Propo
 ALTER TABLE AnaliseExecucao
 ADD CONSTRAINT FK_AnaliseExecucao_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
--- Inserir os dados do texto
+-- Inserir os dados
+INSERT INTO Municipe VALUES 
+(1, 'Afonso Baptista', 193284761, '123456789ZZ9', '1990-04-15', 'M', 'Rua das Flores, Lisboa'),
+(2, 'Dilan Pereira', 256743829, '987654321AA1', '1985-11-30', 'M', 'Avenida Central, Porto'),
+(3, 'Nuno Gonçalves', 312567984, '192837465BC2', '1978-06-22', 'M', 'Travessa do Norte, Coimbra'),
+(4, 'Mariana Lopes', 134859267, '564738291DC3', '1995-08-09', 'F', 'Rua do Carmo, Braga'),
+(5, 'Inês Martins', 276198435, '918273645XY4', '1988-03-25', 'F', 'Estrada Velha, Faro');
 
-INSERT INTO Entidade VALUES (1, 'Água', 507123456, 'Rua do Oceano', 'geral@aguas.pt', 913456789);
-INSERT INTO Entidade VALUES (2, 'Animais', 509274631, 'Rua do Leão', 'animais@natureza.pt', 938724560);
-INSERT INTO Entidade VALUES (3, 'Natureza', 508392714, 'Rua da Natureza', 'geral@natureza.pt', 961234567);
-INSERT INTO Entidade VALUES (4, 'Tráfego', 509482376, 'Avenida dos Transportes', 'geral@transportes.pt', 939876543);
+
+INSERT INTO Entidade(idEntidade,nome,nipc,morada,email,telefone) VALUES
+(1,'Água',507123456,'Rua do Oceano','geral@aguas.pt',913456789),
+(2,'Animais',509274631,'Rua do Leão','animais@natureza.pt',938724560),
+(3,'Natureza',508392714,'Rua da Natureza','geral@natureza.pt',961234567),
+(4,'Tráfego',509482376,'Avenida dos Transportes','geral@transportes.pt',939876543);
+
+-- Acréscimos tendo em conta a ‘Proporcionalidade de Grupo (a)
+
+INSERT INTO Entidade(idEntidade,nome,nipc,morada,email,telefone) VALUES
+(5, 'Ordenamento Territorial', 501234567, 'Rua de Santo André', 'ordenamento@territorial.pt', 965645231),
+(6, 'Logística', 507836129, 'Rua do Comércio', 'contacto@logistica.pt', 961584567);
+ALTER TABLE Entidade ADD website VARCHAR(100) NULL;
 
 
 -- Passa para Fase de Execucao
@@ -240,13 +255,8 @@ INSERT INTO FaseExecucao(idProposta)
 	AND COUNT(c.idProposta) >= 1000
 	AND AVG(c.classificacao) >= 8
 
--- Acréscimos tendo em conta a ‘Proporcionalidade de Grupo
--- a.
-INSERT INTO Entidade VALUES (5, 'Ordenamento Territorial', 501234567, 'Rua de Santo André', 'ordenamento@territorial.pt', 965645231);
-INSERT INTO Entidade VALUES (6, 'Logística', 507836129, 'Rua do Comércio', 'contacto@logistica.pt', 961584567);
-ALTER TABLE Entidade ADD website VARCHAR(100) NULL;
 
--- b.
+-- Acréscimos tendo em conta a ‘Proporcionalidade de Grupo (b)
 GO
 CREATE VIEW PropostasMunicipes AS
 SELECT 
@@ -298,6 +308,9 @@ SELECT * FROM EstadoExecucaoPropostas;
 
 /* 1.1 A) */
 
+SELECT * FROM Municipe;
+SELECT * FROM Proposta;
+SELECT * FROM Classifica;
 SELECT * FROM Entidade;
 SELECT * FROM Parecer;
 SELECT * FROM Construtora;
@@ -315,9 +328,6 @@ SELECT * FROM AnaliseMunipes;
 SELECT * FROM FaseExecucao;
 SELECT * FROM EmOrcamento;
 SELECT * FROM AnaliseExecucao;
-SELECT * FROM Municipe;
-SELECT * FROM Proposta;
-SELECT * FROM Classifica;
 
 
 
@@ -418,6 +428,9 @@ ALTER TABLE OrcamentoConstrutora DROP CONSTRAINT FK_OrcamentoConstrutora_Constru
 ALTER TABLE OrcamentoConsorcio DROP CONSTRAINT FK_OrcamentoConsorcio_Orcamento;
 ALTER TABLE OrcamentoConsorcio DROP CONSTRAINT FK_OrcamentoConsorcio_Consorcio;
 
+DROP TABLE Municipe;
+DROP TABLE Proposta;
+DROP TABLE Classifica;
 DROP TABLE Entidade;
 DROP TABLE Parecer;
 DROP TABLE Construtora;
@@ -435,9 +448,6 @@ DROP TABLE AnaliseMunipes;
 DROP TABLE FaseExecucao;
 DROP TABLE EmOrcamento;
 DROP TABLE AnaliseExecucao;
-DROP TABLE Municipe;
-DROP TABLE Proposta;
-DROP TABLE Classifica;
 
 DROP VIEW EstadoExecucaoPropostas;
 DROP VIEW PropostasMunicipes;
