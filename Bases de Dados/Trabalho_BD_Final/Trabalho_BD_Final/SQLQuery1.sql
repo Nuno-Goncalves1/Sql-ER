@@ -261,29 +261,23 @@ SELECT * FROM Classifica;
 
 /* 1.1 B) */
 SELECT * FROM Municipe AS m INNER JOIN Proposta AS p ON m.idMunicipe = p.idMunicipe
-WHERE m.nome LIKE '%Rita%' AND p.data BETWEEN '2024-04-01' AND '2024-06-30' ORDER BY m.nome Desc;
+WHERE m.nome LIKE '%Rita%' AND p.data BETWEEN '2024-04-01' AND '2024-06-30' ORDER BY m.nome DESC;
 
 /* 1.1 C)*/
 
-Select m.nome, Count(p.idProposta) As 'Quantidade de Propostas' 
-From Municipe as m Left Join Proposta as p On m.idMunicipe = p.idMunicipe 
-Group By m.nome Order By Count(p.idProposta) Desc;
+SELECT m.nome, COUNT(p.idProposta) AS 'Quantidade de Propostas' 
+FROM Municipe AS m INNER JOIN Proposta AS p ON m.idMunicipe = p.idMunicipe 
+GROUP BY m.nome ORDER BY COUNT(p.idProposta) DESC;
 
 /* 1.1 D)*/
 
-Select m.nome
-From Municipe as m Left Join Proposta as p On m.idMunicipe = p.idMunicipe 
-Group By m.nome
-Having Count(p.idProposta) = 0 
-Order By m.nome;
+SELECT m.nome
+FROM Municipe AS m INNER JOIN Proposta AS p ON m.idMunicipe = p.idMunicipe 
+GROUP BY m.nome
+HAVING COUNT(p.idProposta) = 0 
+ORDER BY m.nome;
 
 /* 1.1 E) */
-
-Select p.nome, Avg(p.avaliacao) From Proposta As p
-Where p.data Between '2024-01-01' And '2024-03-31' 
-Group By p.nome
-Having Count(p.avaliacao) > 10 And Avg(p.avaliacao) >= 8 
-Order By Avg(p.avaliacao) Desc;
 
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES
