@@ -279,11 +279,13 @@ ORDER BY m.nome;
 
 /* 1.1 E) */
 
-Select p.nome, Avg(p.avaliacao) From Proposta As p
-Where p.data Between '2024-01-01' And '2024-03-31' 
-Group By p.nome
-Having Count(p.avaliacao) > 10 And Avg(p.avaliacao) >= 8 
-Order By Avg(p.avaliacao) Desc;
+SELECT p.titutlo, AVG(c.classificacao) AS Media_Avaliacao
+FROM Proposta AS p
+INNER JOIN Classifica AS c ON p.Proposta = c.idProposta
+WHERE p.data BETWEEN '2024-01-01' AND '2024-06-30'
+AND c.classificacao >= 8
+AND (SELECT COUNT(*) FROM Classifica WHERE idProposta = p.idProposta) >= 10
+ORDER BY Media_Avaliacao DESC;  
 
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES

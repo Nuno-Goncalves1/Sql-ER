@@ -18,17 +18,6 @@ Having Count(p.idProposta) = 0
 Order By m.nome;
 
 /* 1.1 E) */
-/*Liste para cada designação de proposta a média das avaliações por ela recebidas. No
-resultado deverão apenas constar as propostas que foram realizadas no primeiro
-semestre de 2024 e que tenham tido pelo menos 10 avaliações e média igual ou
-superior a 8. Apresente a resposta ordenada pela média obtida, começando pela mais
-elevada.*/
-
-/*Liste para cada designação de proposta a média das avaliações por ela recebidas. No
-resultado deverão apenas constar as propostas que foram realizadas no primeiro
-semestre de 2024 e que tenham tido pelo menos 10 avaliações e média igual ou
-superior a 8. Apresente a resposta ordenada pela média obtida, começando pela mais
-elevada.*/
 SELECT p.titutlo, AVG(c.classificacao) AS Media_Avaliacao
 FROM Proposta AS p
 INNER JOIN Classifica AS c ON p.Proposta = c.idProposta
