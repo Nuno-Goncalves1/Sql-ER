@@ -350,24 +350,23 @@ AND (SELECT COUNT(*) FROM Classifica WHERE idProposta = p.idProposta) >= 10
 ORDER BY Media_Avaliacao DESC;  
 
 
--- teste
+/* 1.1 H) */
 GO
 CREATE VIEW TotalPropostasMunicipe_PorSemestre AS
 SELECT 
-    p.id_municipio,
-    1 + (MONTH(p.data_proposta) > 6) AS semestre,
+    p.idMunicipe,
+    1 + ROUND(MONTH(p.data) / 12.5, 0) AS semestre,
     COUNT(*) AS total_propostas
-FROM Propostas p
+FROM Proposta AS p
 INNER JOIN (
-    SELECT id_municipio
-    FROM Propostas
-    GROUP BY id_municipio
-    HAVING COUNT(DISTINCT 1 + (MONTH(data_proposta) > 6)) = 2
-) AS m ON p.id_municipio = m.id_municipio
-GROUP BY p.id_municipio, 1 + (MONTH(p.data_proposta) > 6);
+    SELECT idMunicipe
+    FROM Proposta
+    GROUP BY idMunicipe
+    HAVING COUNT(DISTINCT 1 + ROUND(MONTH(data) / 12.5, 0)) = 2
+) AS m ON p.idMunicipe = m.idMunicipe
+GROUP BY p.idMunicipe, 1 + ROUND(MONTH(p.data) / 12.5, 0);
 GO
-
-
+SELECT * FROM TotalPropostasMunicipe_PorSemestre;
 
 
 SELECT TABLE_SCHEMA, TABLE_NAME
@@ -443,3 +442,5 @@ DROP TABLE Classifica;
 DROP VIEW EstadoExecucaoPropostas;
 DROP VIEW PropostasMunicipes;
 DROP VIEW OrcamentosDetalhados;
+
+DROP VIEW TotalPropostasMunicipe_PorSemestre;
