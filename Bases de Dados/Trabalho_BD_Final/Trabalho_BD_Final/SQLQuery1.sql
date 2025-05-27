@@ -178,7 +178,7 @@ CREATE TABLE AnaliseExecucao(
     CONSTRAINT PK_AnaliseExecucao PRIMARY KEY (idAnaliseExecucao,idProposta)
 );
 
--- Key's
+-- Foreign Key's
 ALTER TABLE Proposta
 ADD CONSTRAINT FK_Proposta_Municipe FOREIGN KEY (idMunicipe) REFERENCES Municipe (idMunicipe);
 
@@ -197,7 +197,6 @@ CONSTRAINT FK_Participa_Consorcio FOREIGN KEY (idConsorcio) REFERENCES Consorcio
 ALTER TABLE Orcamento
 ADD CONSTRAINT FK_Orcamento_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
-
 ALTER TABLE OrcamentoConstrutora
 ADD CONSTRAINT FK_OrcamentoConstrutora_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento),
 CONSTRAINT FK_OrcamentoConstrutora_Construtora FOREIGN KEY (idConstrutora) REFERENCES Construtora (idConstrutora); 
@@ -206,9 +205,20 @@ ALTER TABLE OrcamentoConsorcio
 ADD CONSTRAINT FK_OrcamentoConsorcio_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento),
 CONSTRAINT FK_OrcamentoConsorcio_Consorcio FOREIGN KEY (idConsorcio) REFERENCES Consorcio (idConsorcio);
 
+ALTER TABLE EstudoViabilidade
+ADD CONSTRAINT FK_EstudoViabilidade_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
+ALTER TABLE AnaliseMunipes
+ADD CONSTRAINT FK_AnaliseMunipes_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
+ALTER TABLE FaseExecucao
+ADD CONSTRAINT FK_FaseExecucao_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
+ALTER TABLE EmOrcamento
+ADD CONSTRAINT FK_EmOrcamento_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
+
+ALTER TABLE AnaliseExecucao
+ADD CONSTRAINT FK_AnaliseExecucao_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
 
 INSERT INTO FaseExecucao(idProposta)
@@ -250,22 +260,22 @@ SELECT * FROM Classifica;
 
 
 /* 1.1 B) */
-Select * From Municipe As m Inner Join Proposta as p On m.idMunicipe = p.idMunicipe
-Where m.nome Like '%Rita%' And p.data Between '2024-04-01' And '2024-06-30' Order By m.nome Desc;
+SELECT * FROM Municipe AS m INNER JOIN Proposta AS p ON m.idMunicipe = p.idMunicipe
+WHERE m.nome LIKE '%Rita%' AND p.data BETWEEN '2024-04-01' AND '2024-06-30' ORDER BY m.nome DESC;
 
 /* 1.1 C)*/
 
-Select m.nome, Count(p.idProposta) As 'Quantidade de Propostas' 
-From Municipe as m Left Join Proposta as p On m.idMunicipe = p.idMunicipe 
-Group By m.nome Order By Count(p.idProposta) Desc;
+SELECT m.nome, COUNT(p.idProposta) AS 'Quantidade de Propostas' 
+FROM Municipe AS m INNER JOIN Proposta AS p ON m.idMunicipe = p.idMunicipe 
+GROUP BY m.nome ORDER BY COUNT(p.idProposta) DESC;
 
 /* 1.1 D)*/
 
-Select m.nome
-From Municipe as m Left Join Proposta as p On m.idMunicipe = p.idMunicipe 
-Group By m.nome
-Having Count(p.idProposta) = 0 
-Order By m.nome;
+SELECT m.nome
+FROM Municipe AS m INNER JOIN Proposta AS p ON m.idMunicipe = p.idMunicipe 
+GROUP BY m.nome
+HAVING COUNT(p.idProposta) = 0 
+ORDER BY m.nome;
 
 /* 1.1 E) */
 
@@ -274,7 +284,6 @@ Where p.data Between '2024-01-01' And '2024-03-31'
 Group By p.nome
 Having Count(p.avaliacao) > 10 And Avg(p.avaliacao) >= 8 
 Order By Avg(p.avaliacao) Desc;
-
 
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES
@@ -295,14 +304,15 @@ JOIN sys.schemas s ON t.schema_id = s.schema_id
 JOIN sys.types ty ON c.user_type_id = ty.user_type_id
 ORDER BY s.name, t.name, c.column_id
 
+
+
 DECLARE @sql NVARCHAR(MAX) = N''
 SELECT @sql += '
 ALTER TABLE [' + s.name + '].[' + t.name + '] DROP CONSTRAINT [' + fk.name + '];'
 FROM sys.foreign_keys fk
 INNER JOIN sys.tables t ON fk.parent_object_id = t.object_id
 INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
-INNER JOIN sys.tables t ON fk.parent_object_id = t.object_id    
-INNER JOIN sys.schemas s ON t.schema_id = s.schema_id;
+
 
 EXEC sp_executesql @sql
 -- Exclui as chaves estrangeiras
@@ -344,4 +354,3 @@ DROP TABLE AnaliseExecucao;
 DROP TABLE Municipe;
 DROP TABLE Proposta;
 DROP TABLE Classifica;
-
