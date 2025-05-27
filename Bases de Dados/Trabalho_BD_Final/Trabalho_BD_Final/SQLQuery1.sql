@@ -209,8 +209,13 @@ CONSTRAINT FK_OrcamentoConsorcio_Consorcio FOREIGN KEY (idConsorcio) REFERENCES 
 
 INSERT INTO FaseExecucao(idProposta)
     SELECT prop.idProposta
-	FROM Propostas AS prop LEFT JOIN Pareceres AS parc ON parc.proposta_id = p.id
-	WHERE --acabar
+	FROM Propostas AS prop
+		INNER JOIN Pareceres AS parc ON prop.idProposta = parc.idProposta
+		INNER JOIN Classifica AS c ON prop.idProposta = c.idProposta
+	GROUP BY prop.idProposta
+	HAVING COUNT(DISTINCT parc.idEntidade) >= 3
+	AND COUNT(c.idProposta) >= 1000
+	AND AVG(c.classificacao) >= 8
 
 
 
