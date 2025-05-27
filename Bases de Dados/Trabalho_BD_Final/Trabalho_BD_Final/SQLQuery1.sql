@@ -1,114 +1,243 @@
--- Codigo de criaçao das tabelas 
+USE BD_20240620_2425_INF;
+
+
+-- Codigo de criaçao das tabelas
 CREATE TABLE Municipe (
-    idMunicipe INT
-    CONSTRAINT PK_Minicepe PRIMARY KEY (idMunicipe) 
+    idMunicipe INT,
+	nome VARCHAR(MAX),
+	nif INT UNIQUE CHECK (nif BETWEEN 100000000 AND 299999999),
+	cc VARCHAR(12) UNIQUE,
+	dataNascimento DATE,
+	genero Char(1) CHECK (genero IN ('M', 'F', 'O')),
+	morada VARCHAR(MAX),
+    CONSTRAINT PK_Municipe PRIMARY KEY (idMunicipe)
 );
 CREATE TABLE Proposta (
-    idProposta INT 
+    idProposta INT,
+	idMunicipe INT, --FK
+	titulo VARCHAR(MAX),
+	descricao VARCHAR(MAX),
+	data DATE,
+	fase VARCHAR(30),
+	inicioFase DATE,
+	fimFase DATE,
+	montante INT,
+	percentagemCoima INT CHECK (percentagemCoima >= 0 AND percentagemCoima <= 100),
     CONSTRAINT PK_Proposta PRIMARY KEY (idProposta)
 );
 CREATE TABLE Classifica(
+	idMunicipe INT, --FK
+	idProposta INT, --FK
+	classificacao INT CHECK (classificacao BETWEEN 0 AND 10),
+	justificacao VARCHAR(MAX),
     CONSTRAINT PK_Classifica PRIMARY KEY (idMunicipe,idProposta)
 );
+
+
 CREATE TABLE Entidade (
-    idEntidade INT 
+    idEntidade INT,
+	nome VARCHAR(MAX),
+	nif INT UNIQUE CHECK (nif BETWEEN 500000000 AND 599999999),
+	morada VARCHAR(MAX),
+	email VARCHAR(MAX),
+	telefone VARCHAR(MAX),
     CONSTRAINT PK_Entidade PRIMARY KEY (idEntidade)
 );
 CREATE TABLE Parecer(
-    idParecer INT 
-    CONSTRAINT PK_Parecer PRIMARY KEY
+    idEntidade INT, --FK
+	idProposta INT, --FK
+    CONSTRAINT PK_Parecer PRIMARY KEY (idEntidade, idProposta)
 );
+
 CREATE TABLE Construtora(
-    idConstrutora INT
+    idConstrutora INT,
+	nome VARCHAR(MAX),
+    nif INT UNIQUE CHECK (nif BETWEEN 500000000 AND 599999999),
+    morada VARCHAR(MAX),
+    telefone VARCHAR(9),
+    email VARCHAR(MAX),
     CONSTRAINT PK_Construtora PRIMARY KEY (idConstrutora)
 );
 CREATE TABLE Consorcio(
-    idConsorcio INT
+    idConsorcio INT,
+	nome VARCHAR(MAX),
+    nif INT UNIQUE CHECK (nif BETWEEN 500000000 AND 599999999),
+    morada VARCHAR(MAX),
+    telefone VARCHAR(9),
+    email VARCHAR(MAX),
     CONSTRAINT PK_Consorcio PRIMARY KEY (idConsorcio)
 );
 CREATE TABLE Participa(
+	idConstrutora INT, --FK
+	idConsorcio INT, --FK
     CONSTRAINT PK_Participa PRIMARY KEY (idConstrutora,idConsorcio)
 );
+
 CREATE TABLE Orcamento(
-    idOrcamento INT
-    CONSTRAINT PK_Orcamento PRIMARY KEY (idOrcamento)
+    idOrcamento INT UNIQUE,
+	idProposta INT, --FK
+	designacao VARCHAR(MAX),
+	valor INT CHECK (valor > 0),
+	dataInicioExecucao DATE,
+	dataFimExecucao DATE,
+    CONSTRAINT PK_Orcamento PRIMARY KEY (idOrcamento, idProposta)
 );
+CREATE TABLE OrcamentoConstrutora(
+	idOrcamento INT, --FK
+	idConstrutora INT, --FK
+	CONSTRAINT PK_OrcamentoConstrutora PRIMARY KEY (idOrcamento, idConstrutora)
+);
+CREATE TABLE OrcamentoConsorcio(
+	idOrcamento INT, --FK
+	idConsorcio INT, --FK
+	CONSTRAINT PK_OrcamentoConsorcio PRIMARY KEY (idOrcamento, idConsorcio)
+);
+
 CREATE TABLE Materiais(
-    idMateriais INT
+    idMateriais INT,
+	designacao VARCHAR(MAX),
     CONSTRAINT PK_Materiais PRIMARY KEY (idMateriais)
 );
+CREATE TABLE PrecisaMaterial(
+	idOrcamento INT, --FK
+	idMateriais INT, --FK
+    CONSTRAINT PK_PrecisaMaterial PRIMARY KEY (idOrcamento,idMateriais)
+);
+
 CREATE TABLE Equipamentos(
-    idEquipamentos INT
+    idEquipamentos INT,
+	designacao VARCHAR(MAX),
+	horasUtilizacao INT CHECK( horasUtilizacao > 0 AND horasUtilizacao < 25),
+	dataAquisicao DATE,
     CONSTRAINT PK_Equipamentos PRIMARY KEY (idEquipamentos)
 );
-CREATE TABLE PrecisaMaterial(
-    CONSTRAINT PK_Precisa PRIMARY KEY (idOrcamento,idMateriais)
-);
 CREATE TABLE PrecisaEquipamento(
-    CONSTRAINT PK_Precisa PRIMARY KEY (idOrcamento,idEquipamentos)
+	idOrcamento INT, --FK
+	idEquipamentos INT, --FK
+    CONSTRAINT PK_PrecisaEquipamento PRIMARY KEY (idOrcamento,idEquipamentos)
 );
+
 CREATE TABLE EstudoViabilidade(
-    idEstudo INT
-    CONSTRAINT PK_EstudoViabilidade PRIMARY KEY (idEstudo)0
+    idEstudo INT,
+	idProposta INT UNIQUE,
+	exequível BIT, -- 0 false, 1 true
+	dataConsultaMunicipesInicial DATE,
+	dataConsultaMunicipesFinal DATE,
+	dataExecucaoPropostaInicial DATE,
+	dataExecucaoPropostaFinal DATE,
+	montanteGlobal INT,
+	dataInicio DATE,
+	dataFim DATE,
+	concluida BIT NOT NULL, -- 0 false, 1 true
+	relatorio VARCHAR(MAX),
+	dataConclusao DATE,
+    CONSTRAINT PK_EstudoViabilidade PRIMARY KEY (idEstudo,idProposta)
 );
 CREATE TABLE AnaliseMunipes(
-    idAnalise INT
-    CONSTRAINT PK_AnaliseMunipes PRIMARY KEY (idAnalise)
+    idAnalise INT,
+	idProposta INT UNIQUE,
+	dataInicio DATE,
+	dataFim DATE,
+	concluida BIT NOT NULL, -- 0 false, 1 true
+	relatorio VARCHAR(MAX),
+	dataConclusao DATE,
+    CONSTRAINT PK_AnaliseMunipes PRIMARY KEY (idAnalise,idProposta)
 );
 CREATE TABLE FaseExecucao(
-    idFase INT
+    idFase INT,
+	idProposta INT NOT NULL,
+	nomeFase VARCHAR(100) NOT NULL,
+	dataInicio DATE,
+	dataFim DATE,
+	montanteEnvolvidoFinal VARCHAR(MAX),
+	percentagemCoimaFinal INT CHECK (percentagemCoimaFinal >= 0 AND percentagemCoimaFinal <= 100),
+	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
+	relatorio VARCHAR(MAX),
+	dataConclusao DATE,
     CONSTRAINT PK_FaseExecucao PRIMARY KEY (idFase)
 );
 CREATE TABLE EmOrcamento(
-    idEmOrcamento INT
-    CONSTRAINT PK_Orcamento PRIMARY KEY (idEmOrcamento)
+    idEmOrcamento INT,
+	idProposta INT UNIQUE,
+	dataInicio DATE,
+	dataFim DATE,
+	concluida BIT NOT NULL, -- 0 false, 1 true
+	relatorio VARCHAR(MAX),
+	dataConclusao DATE,
+    CONSTRAINT PK_EmOrcamento PRIMARY KEY (idEmOrcamento,idProposta)
 );
 CREATE TABLE AnaliseExecucao(
-    idAnaliseExecucao INT
-    CONSTRAINT PK_AnaliseExecucao PRIMARY KEY (idAnaliseExecucao)
+    idAnaliseExecucao INT,
+	idProposta INT UNIQUE,
+	dataInicio DATE,
+	dataFim DATE,
+	aprovada BIT NOT NULL DEFAULT 0,
+	concluida BIT NOT NULL, -- 0 false, 1 true
+	relatorio VARCHAR(MAX),
+	dataConclusao DATE,
+    CONSTRAINT PK_AnaliseExecucao PRIMARY KEY (idAnaliseExecucao,idProposta)
 );
 
 -- Key's
 ALTER TABLE Proposta
 ADD CONSTRAINT FK_Proposta_Municipe FOREIGN KEY (idMunicipe) REFERENCES Municipe (idMunicipe);
 
-ALTER TABLE Clasifica
+ALTER TABLE Classifica
 ADD CONSTRAINT FK_Clasifica_Municipe FOREIGN KEY (idMunicipe) REFERENCES Municipe (idMunicipe),
 CONSTRAINT FK_Clasifica_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
+
+ALTER TABLE Parecer
+ADD CONSTRAINT FK_Parecer_Entidade FOREIGN KEY (idEntidade) REFERENCES Entidade (idEntidade),
+CONSTRAINT FK_Parecer_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
+
+ALTER TABLE Participa
+ADD CONSTRAINT FK_Participa_Construtora FOREIGN KEY (idConstrutora) REFERENCES Construtora (idConstrutora),
+CONSTRAINT FK_Participa_Consorcio FOREIGN KEY (idConsorcio) REFERENCES Consorcio (idConsorcio);
+
+ALTER TABLE Orcamento
+ADD CONSTRAINT FK_Orcamento_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
+
+
+ALTER TABLE OrcamentoConstrutora
+ADD CONSTRAINT FK_OrcamentoConstrutora_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento),
+CONSTRAINT FK_OrcamentoConstrutora_Construtora FOREIGN KEY (idConstrutora) REFERENCES Construtora (idConstrutora); 
+
+ALTER TABLE OrcamentoConsorcio
+ADD CONSTRAINT FK_OrcamentoConsorcio_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento),
+CONSTRAINT FK_OrcamentoConsorcio_Consorcio FOREIGN KEY (idConsorcio) REFERENCES Consorcio (idConsorcio);
+
+
+INSERT INTO FaseExecucao(idProposta)
+    SELECT prop.idProposta
+	FROM Propostas AS prop LEFT JOIN Pareceres AS parc ON parc.proposta_id = p.id
+	WHERE --acabar
+
 
 
 -- Consultas para verificar a estrutura das tabelas criadas.
 -- Verifica as tabelas criadas
-SELECT *
-FROM Municipe;
-SELECT *
-FROM Entidade;
-SELECT *
-FROM Proposta;
-SELECT *
-FROM  Parecer;
-SELECT *
-FROM EstudoViabilidade;
-SELECT *
-FROM Analise;
-SELECT *
-FROM FaseExecucao;
-SELECT *
-FROM EmOrcamento;
-SELECT *
-FROM AnaliseExecucao;
-SELECT *
-FROM Construtora;
-SELECT *
-FROM Orcamento;
-SELECT *
-FROM Materiais;
-SELECT *
-FROM Maquinas;
-SELECT *
-FROM OrcamentoMateriais;
-SELECT *
-FROM OrcamentoMaquinas;
+
+SELECT * FROM Entidade;
+SELECT * FROM Parecer;
+SELECT * FROM Construtora;
+SELECT * FROM Consorcio;
+SELECT * FROM Participa;
+SELECT * FROM Orcamento;
+SELECT * FROM OrcamentoConstrutora;
+SELECT * FROM OrcamentoConsorcio;
+SELECT * FROM Materiais;
+SELECT * FROM PrecisaMaterial;
+SELECT * FROM Equipamentos;
+SELECT * FROM PrecisaEquipamento;
+SELECT * FROM EstudoViabilidade;
+SELECT * FROM AnaliseMunipes;
+SELECT * FROM FaseExecucao;
+SELECT * FROM EmOrcamento;
+SELECT * FROM AnaliseExecucao;
+SELECT * FROM Municipe;
+SELECT * FROM Proposta;
+SELECT * FROM Classifica;
+
 
 
 /* 1.1 B) */
@@ -168,20 +297,41 @@ INNER JOIN sys.schemas s ON t.schema_id = s.schema_id;
 EXEC sp_executesql @sql
 -- Exclui as chaves estrangeiras
 
+ALTER TABLE nome_tabela DROP CONSTRAINT nome_da_constraint;
+
 --Exclusao de tabelas
-DROP TABLE  OrcamentoMaquinas;
-DROP TABLE  OrcamentoMateriais;
-DROP TABLE  Orcamento;
-DROP TABLE  Construtora;
-DROP TABLE  Materiais;
-DROP TABLE  Maquinas;
-DROP TABLE  AnaliseExecucao;
-DROP TABLE  EmOrcamento;
-DROP TABLE  FaseExecucao;
-DROP TABLE  Analise;
-DROP TABLE  EstudoViabilidade;
-DROP TABLE  Parecer;
-DROP TABLE  Proposta;
-DROP TABLE  Entidade;
-DROP TABLE  Municipe;
+
+ALTER TABLE Proposta DROP CONSTRAINT FK_Proposta_Municipe;
+ALTER TABLE Classifica DROP CONSTRAINT FK_Clasifica_Municipe;
+ALTER TABLE Classifica DROP CONSTRAINT FK_Clasifica_Proposta;
+ALTER TABLE Parecer DROP CONSTRAINT FK_Parecer_Entidade;
+ALTER TABLE Parecer DROP CONSTRAINT FK_Parecer_Proposta;
+ALTER TABLE Participa DROP CONSTRAINT FK_Participa_Construtora;
+ALTER TABLE Participa DROP CONSTRAINT FK_Participa_Consorcio;
+ALTER TABLE Orcamento DROP CONSTRAINT FK_Orcamento_Proposta;
+ALTER TABLE OrcamentoConstrutora DROP CONSTRAINT FK_OrcamentoConstrutora_Orcamento;
+ALTER TABLE OrcamentoConstrutora DROP CONSTRAINT FK_OrcamentoConstrutora_Construtora;
+ALTER TABLE OrcamentoConsorcio DROP CONSTRAINT FK_OrcamentoConsorcio_Orcamento;
+ALTER TABLE OrcamentoConsorcio DROP CONSTRAINT FK_OrcamentoConsorcio_Consorcio;
+
+DROP TABLE Entidade;
+DROP TABLE Parecer;
+DROP TABLE Construtora;
+DROP TABLE Consorcio;
+DROP TABLE Participa;
+DROP TABLE Orcamento;
+DROP TABLE OrcamentoConstrutora;
+DROP TABLE OrcamentoConsorcio;
+DROP TABLE Materiais;
+DROP TABLE PrecisaMaterial;
+DROP TABLE Equipamentos;
+DROP TABLE PrecisaEquipamento;
+DROP TABLE EstudoViabilidade;
+DROP TABLE AnaliseMunipes;
+DROP TABLE FaseExecucao;
+DROP TABLE EmOrcamento;
+DROP TABLE AnaliseExecucao;
+DROP TABLE Municipe;
+DROP TABLE Proposta;
+DROP TABLE Classifica;
 
