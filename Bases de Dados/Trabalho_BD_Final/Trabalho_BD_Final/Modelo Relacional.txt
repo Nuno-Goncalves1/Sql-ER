@@ -5,7 +5,7 @@ Classifica(idMunicipe (PK,FK), idProposta (PK,FK), classificacao, justificacao)
 Entidade(idEntidade(PK), nome, nipc, morada, email, telefone)
 Parece (idEntidade(PK,FK), idProposta(PK,FK))
 
-Construtora(idConstrutora(PK), )
+Construtora(idConstrutora(PK), nome, nif, morada, telefone, email)
 Consorcio(idConsorcio(PK), ...)
 Participa(idConstrutora (PK,FK), idConsorcio (PK,FK))
 
