@@ -132,9 +132,10 @@ CREATE TABLE AnaliseExecucao(
 
 
 CREATE TABLE Orcamento(
-    idOrcamento INT UNIQUE,
+    idOrcamento INT,
 	idFaseExecucao INT, --FK
-	valor INT CHECK (valor > 0),
+	idProposta INT,
+	valor DECIMAL(10,2) CHECK (valor > 0),
 	dataInicioExecucao DATE,
 	dataFimExecucao DATE,
     CONSTRAINT PK_Orcamento PRIMARY KEY (idOrcamento, idFaseExecucao)
@@ -143,20 +144,23 @@ CREATE TABLE Orcamento(
 CREATE TABLE OrdensDeTrabalho(
 	idOrdemDeTrabalho INT,
 	idOrcamento INT, --FK
+	idFaseExecucao INT, --FK
 	designacao VARCHAR(MAX),
 	dataInicio DATE,
 	dataFim DATE,
-	CONSTRAINT PK_OrdemDeTrabalho PRIMARY KEY (idOrdemDeTrabalho)
+	CONSTRAINT PK_OrdemDeTrabalho PRIMARY KEY (idOrdemDeTrabalho, idFaseExecucao)
 );
 
 CREATE TABLE OrcamentoConstrutora(
 	idOrcamento INT, --FK
 	idConstrutora INT, --FK
+	idFaseExecucao INT, --FK
 	CONSTRAINT PK_OrcamentoConstrutora PRIMARY KEY (idOrcamento, idConstrutora)
 );
 CREATE TABLE OrcamentoConsorcio(
 	idOrcamento INT, --FK
 	idConsorcio INT, --FK
+	idFaseExecucao INT, --FK
 	CONSTRAINT PK_OrcamentoConsorcio PRIMARY KEY (idOrcamento, idConsorcio)
 );
 
@@ -167,8 +171,9 @@ CREATE TABLE Materiais(
 );
 CREATE TABLE PrecisaMaterial(
 	idOrdemDeTrabalho INT, --FK
+	idFaseExecucao INT, --FK
 	idMateriais INT, --FK
-    CONSTRAINT PK_PrecisaMaterial PRIMARY KEY (idOrdemDeTrabalho,idMateriais)
+    CONSTRAINT PK_PrecisaMaterial PRIMARY KEY (idOrdemDeTrabalho, idFaseExecucao, idMateriais)
 );
 
 CREATE TABLE Equipamentos(
@@ -180,6 +185,7 @@ CREATE TABLE Equipamentos(
 );
 CREATE TABLE PrecisaEquipamento(
 	idOrdemDeTrabalho INT, --FK
+	idFaseExecucao INT, --FK
 	idEquipamentos INT, --FK
     CONSTRAINT PK_PrecisaEquipamento PRIMARY KEY (idOrdemDeTrabalho,idEquipamentos)
 );
@@ -217,25 +223,25 @@ ALTER TABLE AnaliseExecucao
 ADD CONSTRAINT FK_AnaliseExecucao_Proposta FOREIGN KEY (idProposta) REFERENCES Proposta (idProposta);
 
 ALTER TABLE Orcamento
-ADD CONSTRAINT FK_Orcamento_FaseExecucao FOREIGN KEY (idFaseExecucao) REFERENCES FaseExecucao (idFase);
+ADD CONSTRAINT FK_Orcamento_FaseExecucao FOREIGN KEY (idFaseExecucao, idProposta) REFERENCES FaseExecucao (idFase, idProposta);
 
 ALTER TABLE OrcamentoConstrutora
-ADD CONSTRAINT FK_OrcamentoConstrutora_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento),
+ADD CONSTRAINT FK_OrcamentoConstrutora_Orcamento FOREIGN KEY (idOrcamento, idFaseExecucao) REFERENCES Orcamento (idOrcamento, idFaseExecucao),
 CONSTRAINT FK_OrcamentoConstrutora_Construtora FOREIGN KEY (idConstrutora) REFERENCES Construtora (idConstrutora); 
 
 ALTER TABLE OrcamentoConsorcio
-ADD CONSTRAINT FK_OrcamentoConsorcio_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento),
+ADD CONSTRAINT FK_OrcamentoConsorcio_Orcamento FOREIGN KEY (idOrcamento, idFaseExecucao) REFERENCES Orcamento (idOrcamento, idFaseExecucao),
 CONSTRAINT FK_OrcamentoConsorcio_Consorcio FOREIGN KEY (idConsorcio) REFERENCES Consorcio (idConsorcio);
 
 ALTER TABLE OrdensDeTrabalho
-ADD CONSTRAINT FK_OrdemDeTrabalho_Orcamento FOREIGN KEY (idOrcamento) REFERENCES Orcamento (idOrcamento);
+ADD CONSTRAINT FK_OrdemDeTrabalho_Orcamento FOREIGN KEY (idOrcamento, idFaseExecucao) REFERENCES Orcamento (idOrcamento, idFaseExecucao);
 
 ALTER TABLE PrecisaMaterial
-ADD CONSTRAINT FK_PrecisaMateriais_OrdemDeTrabalho FOREIGN KEY (idOrdemDeTrabalho) REFERENCES OrdensDeTrabalho (idOrdemDeTrabalho),
+ADD CONSTRAINT FK_PrecisaMateriais_OrdemDeTrabalho FOREIGN KEY (idOrdemDeTrabalho, idFaseExecucao) REFERENCES OrdensDeTrabalho (idOrdemDeTrabalho, idFaseExecucao),
 CONSTRAINT FK_PrecisaMateriais_Materiais FOREIGN KEY (idMateriais) REFERENCES Materiais (idMateriais);
 
 ALTER TABLE PrecisaEquipamento
-ADD CONSTRAINT FK_PrecisaEquipamento_OrdemDeTrabalho FOREIGN KEY (idOrdemDeTrabalho) REFERENCES OrdensDeTrabalho (idOrdemDeTrabalho),
+ADD CONSTRAINT FK_PrecisaEquipamento_OrdemDeTrabalho FOREIGN KEY (idOrdemDeTrabalho, idFaseExecucao) REFERENCES OrdensDeTrabalho (idOrdemDeTrabalho, idFaseExecucao),
 CONSTRAINT FK_PrecisaEquipamento_Equipamento FOREIGN KEY (idEquipamentos) REFERENCES Equipamentos (idEquipamentos);
 
 
@@ -447,12 +453,22 @@ ALTER TABLE Parecer DROP CONSTRAINT FK_Parecer_Entidade;
 ALTER TABLE Parecer DROP CONSTRAINT FK_Parecer_Proposta;
 ALTER TABLE Participa DROP CONSTRAINT FK_Participa_Construtora;
 ALTER TABLE Participa DROP CONSTRAINT FK_Participa_Consorcio;
-
-ALTER TABLE AnaliseExecucao DROP CONSTRAINT FK_AnaliseExecucao_Proposta;
-ALTER TABLE EmOrcamento DROP CONSTRAINT FK_EmOrcamento_Proposta;
-ALTER TABLE FaseExecucao DROP CONSTRAINT FK_FaseExecucao_Proposta;
 ALTER TABLE EstudoViabilidade DROP CONSTRAINT FK_EstudoViabilidade_Proposta;
 ALTER TABLE AnaliseMunipes DROP CONSTRAINT FK_AnaliseMunipes_Proposta;
+ALTER TABLE FaseExecucao DROP CONSTRAINT FK_FaseExecucao_Proposta;
+ALTER TABLE EmOrcamento DROP CONSTRAINT FK_EmOrcamento_Proposta;
+ALTER TABLE AnaliseExecucao DROP CONSTRAINT FK_AnaliseExecucao_Proposta;
+ALTER TABLE Orcamento DROP CONSTRAINT FK_Orcamento_FaseExecucao;
+ALTER TABLE OrcamentoConstrutora DROP CONSTRAINT FK_OrcamentoConstrutora_Orcamento;
+ALTER TABLE OrcamentoConstrutora DROP CONSTRAINT FK_OrcamentoConstrutora_Construtora;
+ALTER TABLE OrcamentoConsorcio DROP CONSTRAINT FK_OrcamentoConsorcio_Orcamento;
+ALTER TABLE OrcamentoConsorcio DROP CONSTRAINT FK_OrcamentoConsorcio_Consorcio;
+ALTER TABLE OrdensDeTrabalho DROP CONSTRAINT FK_OrdemDeTrabalho_Orcamento;
+ALTER TABLE PrecisaMaterial DROP CONSTRAINT FK_PrecisaMateriais_OrdemDeTrabalho;
+ALTER TABLE PrecisaMaterial DROP CONSTRAINT FK_PrecisaMateriais_Materiais;
+ALTER TABLE PrecisaEquipamento DROP CONSTRAINT FK_PrecisaEquipamento_OrdemDeTrabalho;
+ALTER TABLE PrecisaEquipamento DROP CONSTRAINT FK_PrecisaEquipamento_Equipamento;
+
 
 DROP TABLE Municipe;
 DROP TABLE Proposta;
@@ -474,6 +490,7 @@ DROP TABLE AnaliseMunipes;
 DROP TABLE FaseExecucao;
 DROP TABLE EmOrcamento;
 DROP TABLE AnaliseExecucao;
+DROP TABLE OrdensDeTrabalho;
 
 DROP VIEW EstadoExecucaoPropostas;
 DROP VIEW PropostasMunicipes;
