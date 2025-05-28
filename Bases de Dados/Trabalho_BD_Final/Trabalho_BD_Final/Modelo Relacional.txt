@@ -1,6 +1,6 @@
 Municipe(idMunicipe(PK), nome, nif, cc, dataNascimento, genero, morada)
-Proposta(idProposta(PK), idMunicipe(FK), titulo, )
-Classifica(idMunicipe (PK,FK), idProposta (PK,FK))
+Proposta(idProposta(PK), idMunicipe(FK), titulo, descricao, data, fase, inicioFase, fimFase, montante, precentagemCoima)
+Classifica(idMunicipe (PK,FK), idProposta (PK,FK), classificacao, justificacao)
 
 Entidade(idEntidade(PK), ...)
 Parece (idEntidade(PK,FK), idProposta(PK,FK))
