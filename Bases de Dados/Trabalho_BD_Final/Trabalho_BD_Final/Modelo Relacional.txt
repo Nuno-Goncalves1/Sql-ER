@@ -1,4 +1,4 @@
-Municipe(idMunicipe(PK), ...)
+Municipe(idMunicipe(PK), nome, nif, cc, dataNascimento, genero, morada)
 Proposta(idProposta(PK), idMunicipe(FK), ...)
 Classifica(idMunicipe (PK,FK), idProposta (PK,FK))
 
