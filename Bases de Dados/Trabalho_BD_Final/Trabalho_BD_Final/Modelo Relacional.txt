@@ -1,11 +1,11 @@
 Municipe(idMunicipe(PK), nome, nif, cc, dataNascimento, genero, morada)
-Proposta(idProposta(PK), idMunicipe(FK), titulo, descricao, data, fase, inicioFase, fimFase, montante, precentagemCoima)
+Proposta(idProposta(PK), idMunicipe(FK), titulo, descricao, data)
 Classifica(idMunicipe (PK,FK), idProposta (PK,FK), classificacao, justificacao)
 
 Entidade(idEntidade(PK), nome, nipc, morada, email, telefone)
 Parece (idEntidade(PK,FK), idProposta(PK,FK))
 
-Construtora(idConstrutora(PK), ...)
+Construtora(idConstrutora(PK), )
 Consorcio(idConsorcio(PK), ...)
 Participa(idConstrutora (PK,FK), idConsorcio (PK,FK))
 
