@@ -1,5 +1,5 @@
 Municipe(idMunicipe(PK), nome, nif, cc, dataNascimento, genero, morada)
-Proposta(idProposta(PK), idMunicipe(FK), ...)
+Proposta(idProposta(PK), idMunicipe(FK), titulo, )
 Classifica(idMunicipe (PK,FK), idProposta (PK,FK))
 
 Entidade(idEntidade(PK), ...)
