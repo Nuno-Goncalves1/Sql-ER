@@ -6,9 +6,10 @@ Entidade(idEntidade(PK), nome, nipc, morada, email, telefone)
 Parece (idEntidade(PK,FK), idProposta(PK,FK))
 
 Construtora(idConstrutora(PK), nome, nif, morada, telefone, email)
-Consorcio(idConsorcio(PK), ...)
+Consorcio(idConsorcio(PK), nome, nif, morada, telefone, email)
 Participa(idConstrutora (PK,FK), idConsorcio (PK,FK))
 
+EstudoViabilidade(idEstudo(PK), 
 OrcamentoConstrutora(idOrcamento(PK,FK), idConstrutora(FK))
 OrcamentoConsorcio(idOrcamento(PK,FK), idConsorcio(FK))
 
