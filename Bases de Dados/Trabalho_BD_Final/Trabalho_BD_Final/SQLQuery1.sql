@@ -68,10 +68,9 @@ CREATE TABLE Participa(
     CONSTRAINT PK_Participa PRIMARY KEY (idConstrutora,idConsorcio)
 );
 
-
 CREATE TABLE EstudoViabilidade(
     idEstudo INT,
-	idProposta INT UNIQUE,
+	idProposta INT UNIQUE, --FK
 	exequível BIT, -- 0 false, 1 true
 	dataConsultaMunicipesInicial DATE,
 	dataConsultaMunicipesFinal DATE,
