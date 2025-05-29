@@ -1,28 +1,41 @@
-Municipe(idMunicipe(PK), nome, nif, cc, dataNascimento, genero, morada)
-Proposta(idProposta(PK), idMunicipe(FK), titulo, descricao, data)
-Classifica(idMunicipe (PK,FK), idProposta (PK,FK), classificacao, justificacao)
+Municipe(idMunicipe (PK), nome, nif, cc, dataNascimento, genero, morada)
 
-Entidade(idEntidade(PK), nome, nipc, morada, email, telefone)
-Parece (idEntidade(PK,FK), idProposta(PK,FK))
+Proposta(idProposta (PK), idMunicipe (FK), titulo, descricao, data)
 
-Construtora(idConstrutora(PK), nome, nif, morada, telefone, email)
-Consorcio(idConsorcio(PK), nome, nif, morada, telefone, email)
-Participa(idConstrutora (PK,FK), idConsorcio (PK,FK))
+Classifica(idMunicipe (PK, FK), idProposta (PK, FK), classificacao, justificacao)
 
-EstudoViabilidade(idEstudo(PK), idProposta(FK), exequível, dataConsultaMunicipesInicial, dataConsultaMunicipesFinal, dataExecucaoPropostaInicial, dataExecucaoPropostaFinal, montanteGlobal, dataInicio, dataFim, concluida, relatorio, dataConclusao)
-OrcamentoConstrutora(idOrcamento(PK,FK), idConstrutora(FK), dataInicio, dataFim, concluida, relatorio, dataConclusao)
-OrcamentoConsorcio(idOrcamento(PK,FK), idConsorcio(FK), )
+Entidade(idEntidade (PK), nome, nipc, morada, email, telefone, website)
 
-Orcamento(idOrcamento(PK), idProposta(FK), ...)
+Parecer(idEntidade (PK, FK), idProposta (PK, FK))
 
-Materiais(idMaterial(PK), ...)
-PrecisaMaterial(idOrçamento(PK,FK), idMaterial(PK,FK), ...)
+Construtora(idConstrutora (PK), nome, nif, morada, telefone, email)
 
-Equipamentos(idEquipamento(PK), ...)
-PrecisaEquipamento(idOrçamento(PK,FK), idEquipamento(PK,FK), ...)
+Consorcio(idConsorcio (PK), nome, nif, morada, telefone, email)
 
-EstudoViabilidade(idEstudo(PK), idProposta(FK), ...)
-AnaliseMunicipes(idAnaliseM(PK), idProposta(FK), ...)
-FaseExecucao(idFase(PK), idProposta(FK), ...)
-EmOrcamento(idEmOrcamento(PK), idProposta(FK), ...)
-AnaliseExecucao(idAnaliseE(PK), idProposta(FK), ...)
+Participa(idConstrutora (PK, FK), idConsorcio (PK, FK))
+
+EstudoViabilidade(idEstudo (PK), idProposta (PK, FK), exequivel, dataConsultaMunicipesInicial, dataConsultaMunicipesFinal, dataExecucaoPropostaInicial, dataExecucaoPropostaFinal, montanteGlobal, dataInicio, dataFim, concluida, relatorio, dataConclusao)
+
+AnaliseMunipes(idAnalise (PK), idProposta (PK, FK), dataInicio, dataFim, concluida, relatorio, dataConclusao)
+
+FaseExecucao(idFase (PK), idProposta (PK, FK), nomeFase, dataInicio, dataFim, montanteEnvolvidoFinal, percentagemCoimaFinal, concluida, relatorio, dataConclusao)
+
+EmOrcamento(idEmOrcamento (PK), idProposta (PK, FK), dataInicio, dataFim, concluida, relatorio, dataConclusao)
+
+AnaliseExecucao(idAnaliseExecucao (PK), idProposta (PK, FK), dataInicio, dataFim, aprovada, concluida, relatorio, dataConclusao)
+
+Orcamento(idOrcamento (PK), idFaseExecucao (PK, FK), idProposta (FK), valor, dataInicioExecucao, dataFimExecucao)
+
+OrdensDeTrabalho(idOrdemDeTrabalho (PK), idFaseExecucao (PK, FK), idProposta (FK), designacao, dataInicio, dataFim)
+
+OrcamentoConstrutora(idOrcamento (PK, FK), idFaseExecucao (PK, FK), idConstrutora (PK, FK))
+
+OrcamentoConsorcio(idOrcamento (PK, FK), idFaseExecucao (PK, FK), idConsorcio (PK, FK))
+
+Materiais(idMateriais (PK), designacao)
+
+PrecisaMaterial(idOrdemDeTrabalho (PK, FK), idFaseExecucao (PK, FK), idMateriais (PK, FK))
+
+Equipamentos(idEquipamentos (PK), designacao, horasUtilizacao, dataAquisicao)
+
+PrecisaEquipamento(idOrdemDeTrabalho (PK, FK), idFaseExecucao (PK, FK), idEquipamentos (PK, FK))
