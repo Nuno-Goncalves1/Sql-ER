@@ -79,7 +79,7 @@ CREATE TABLE EstudoViabilidade(
 	montanteGlobal INT,
 	dataInicio DATE,
 	dataFim DATE,
-	concluida BIT NOT NULL, -- 0 false, 1 true
+	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
 	relatorio VARCHAR(MAX),
 	dataConclusao DATE,
     CONSTRAINT PK_EstudoViabilidade PRIMARY KEY (idEstudo,idProposta)
@@ -89,7 +89,7 @@ CREATE TABLE AnaliseMunipes(
 	idProposta INT UNIQUE,
 	dataInicio DATE,
 	dataFim DATE,
-	concluida BIT NOT NULL, -- 0 false, 1 true
+	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
 	relatorio VARCHAR(MAX),
 	dataConclusao DATE,
     CONSTRAINT PK_AnaliseMunipes PRIMARY KEY (idAnalise,idProposta)
@@ -112,7 +112,7 @@ CREATE TABLE EmOrcamento(
 	idProposta INT UNIQUE,
 	dataInicio DATE,
 	dataFim DATE,
-	concluida BIT NOT NULL, -- 0 false, 1 true
+	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
 	relatorio VARCHAR(MAX),
 	dataConclusao DATE,
     CONSTRAINT PK_EmOrcamento PRIMARY KEY (idEmOrcamento,idProposta)
@@ -122,8 +122,8 @@ CREATE TABLE AnaliseExecucao(
 	idProposta INT UNIQUE,
 	dataInicio DATE,
 	dataFim DATE,
-	aprovada BIT NOT NULL DEFAULT 0,
-	concluida BIT NOT NULL, -- 0 false, 1 true
+	aprovada BIT NOT NULL,
+	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
 	relatorio VARCHAR(MAX),
 	dataConclusao DATE,
     CONSTRAINT PK_AnaliseExecucao PRIMARY KEY (idAnaliseExecucao,idProposta)
