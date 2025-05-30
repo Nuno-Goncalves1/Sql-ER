@@ -4,7 +4,7 @@ USE BD_20240620_2425_INF;
 -- Codigo de criaçao das tabelas
 CREATE TABLE Municipe (
     idMunicipe INT,
-	nome VARCHAR(MAX),
+	nome VARCHAR(MAX) NOT NULL,
 	nif INT UNIQUE CHECK (nif BETWEEN 100000000 AND 399999999),
 	cc VARCHAR(12) UNIQUE,
 	dataNascimento DATE,
@@ -31,11 +31,11 @@ CREATE TABLE Classifica(
 
 CREATE TABLE Entidade (
     idEntidade INT,
-	nome VARCHAR(MAX),
+	nome VARCHAR(MAX) NOT NULL,
 	nipc INT UNIQUE CHECK (nipc BETWEEN 500000000 AND 999999999),
 	morada VARCHAR(MAX),
 	email VARCHAR(MAX),
-	telefone VARCHAR(MAX),
+	telefone VARCHAR(9),
     CONSTRAINT PK_Entidade PRIMARY KEY (idEntidade)
 );
 CREATE TABLE Parecer(
@@ -46,7 +46,7 @@ CREATE TABLE Parecer(
 
 CREATE TABLE Construtora(
     idConstrutora INT,
-	nome VARCHAR(MAX),
+	nome VARCHAR(MAX) NOT NULL,
     nif INT UNIQUE CHECK (nif BETWEEN 500000000 AND 599999999),
     morada VARCHAR(MAX),
     telefone VARCHAR(9),
@@ -55,7 +55,7 @@ CREATE TABLE Construtora(
 );
 CREATE TABLE Consorcio(
     idConsorcio INT,
-	nome VARCHAR(MAX),
+	nome VARCHAR(MAX) NOT NULL,
     nif INT UNIQUE CHECK (nif BETWEEN 500000000 AND 599999999),
     morada VARCHAR(MAX),
     telefone VARCHAR(9),
@@ -76,7 +76,7 @@ CREATE TABLE EstudoViabilidade(
 	dataConsultaMunicipesFinal DATE,
 	dataExecucaoPropostaInicial DATE,
 	dataExecucaoPropostaFinal DATE,
-	montanteGlobal INT,
+	montanteGlobal DECIMAL(10,2),
 	dataInicio DATE,
 	dataFim DATE,
 	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
@@ -97,10 +97,10 @@ CREATE TABLE AnaliseMunipes(
 CREATE TABLE FaseExecucao(
     idFase INT,
 	idProposta INT NOT NULL,
-	nomeFase VARCHAR(100) NOT NULL,
+	nomeFase VARCHAR(MAX) NOT NULL,
 	dataInicio DATE,
 	dataFim DATE,
-	montanteEnvolvidoFinal VARCHAR(MAX),
+	montanteEnvolvidoFinal Decimal(10,2),
 	percentagemCoimaFinal INT CHECK (percentagemCoimaFinal >= 0 AND percentagemCoimaFinal <= 100),
 	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
 	relatorio VARCHAR(MAX),
@@ -133,7 +133,7 @@ CREATE TABLE AnaliseExecucao(
 CREATE TABLE Orcamento(
     idOrcamento INT,
 	idFaseExecucao INT, --FK
-	idProposta INT,
+	idProposta INT, --FK
 	valor DECIMAL(10,2) CHECK (valor > 0),
 	dataInicioExecucao DATE,
 	dataFimExecucao DATE,
