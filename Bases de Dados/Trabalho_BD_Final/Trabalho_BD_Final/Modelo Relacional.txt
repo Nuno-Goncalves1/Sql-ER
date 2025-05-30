@@ -4,7 +4,7 @@ Proposta(idProposta (PK), idMunicipe (FK), titulo, descricao, data)
 
 Classifica(idMunicipe (PK, FK), idProposta (PK, FK), classificacao, justificacao)
 
-Entidade(idEntidade (PK), nome, nipc, morada, email, telefone, website)
+Entidade(idEntidade (PK), nome, nipc, morada, email, telefone)
 
 Parecer(idEntidade (PK, FK), idProposta (PK, FK))
 
