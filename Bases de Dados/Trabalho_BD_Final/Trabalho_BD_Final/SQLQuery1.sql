@@ -409,36 +409,6 @@ GO
 SELECT * FROM TotalPropostasMunicipe_PorSemestre;
 
 
-SELECT TABLE_SCHEMA, TABLE_NAME
-FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_TYPE = 'BASE TABLE'
-
-
-SELECT 
-    t.name AS Tabela,
-    c.name AS Coluna,
-    ty.name AS Tipo,
-    c.max_length AS Tamanho,
-    c.is_nullable AS PodeSerNulo,
-    c.is_identity AS AutoIncremento,
-    c.column_id AS OrdemNaTabela
-FROM sys.columns c
-JOIN sys.tables t ON c.object_id = t.object_id
-JOIN sys.schemas s ON t.schema_id = s.schema_id
-JOIN sys.types ty ON c.user_type_id = ty.user_type_id
-ORDER BY s.name, t.name, c.column_id
-
-
-
-DECLARE @sql NVARCHAR(MAX) = N''
-SELECT @sql += '
-ALTER TABLE [' + s.name + '].[' + t.name + '] DROP CONSTRAINT [' + fk.name + '];'
-FROM sys.foreign_keys fk
-INNER JOIN sys.tables t ON fk.parent_object_id = t.object_id
-INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
-
-
-EXEC sp_executesql @sql
 -- Exclui as chaves estrangeiras
 
 ALTER TABLE nome_tabela DROP CONSTRAINT nome_da_constraint;
