@@ -100,7 +100,7 @@ CREATE TABLE FaseExecucao(
 	nomeFase VARCHAR(MAX) NOT NULL,
 	dataInicio DATE,
 	dataFim DATE,
-	montanteEnvolvidoFinal Decimal(10,2),
+	montanteEnvolvidoFinal DECIMAL(10,2),
 	percentagemCoimaFinal INT CHECK (percentagemCoimaFinal >= 0 AND percentagemCoimaFinal <= 100),
 	concluida BIT NOT NULL DEFAULT 0, -- 0 false, 1 true
 	relatorio VARCHAR(MAX),
