@@ -412,9 +412,6 @@ SELECT * FROM TotalPropostasMunicipe_PorSemestre;
 -- Exclui as chaves estrangeiras
 
 ALTER TABLE nome_tabela DROP CONSTRAINT nome_da_constraint;
-
---Exclusao de tabelas
-
 ALTER TABLE Proposta DROP CONSTRAINT FK_Proposta_Municipe;
 ALTER TABLE Classifica DROP CONSTRAINT FK_Clasifica_Municipe;
 ALTER TABLE Classifica DROP CONSTRAINT FK_Clasifica_Proposta;
@@ -438,7 +435,7 @@ ALTER TABLE PrecisaMaterial DROP CONSTRAINT FK_PrecisaMateriais_Materiais;
 ALTER TABLE PrecisaEquipamento DROP CONSTRAINT FK_PrecisaEquipamento_OrdemDeTrabalho;
 ALTER TABLE PrecisaEquipamento DROP CONSTRAINT FK_PrecisaEquipamento_Equipamento;
 
-
+--Exclusao de tabelas
 DROP TABLE Municipe;
 DROP TABLE Proposta;
 DROP TABLE Classifica;
